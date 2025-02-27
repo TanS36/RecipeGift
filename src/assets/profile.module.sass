@@ -1,0 +1,66 @@
+.profileContainer
+  width: 100%
+  max-width: 400px
+  margin: 50px auto
+  padding: 20px
+  border: 1px solid rgba(191, 216, 227, .8)
+  border-radius: 10px
+  background-color: #fefefe
+
+  .profileHeader
+    text-align: center
+
+    .avatar
+      border-radius: 50%
+      width: 100px
+      height: 100px
+      object-fit: cover
+      margin-bottom: 10px
+
+    .nickname
+      font-size: 24px
+      font-weight: bold
+      color: #362d50
+      margin-bottom: 5px
+
+    .description
+      font-size: 16px
+      color: #9db5b2
+
+  .favoriteFoods
+    margin-top: 20px
+
+    h3
+      font-size: 18px
+      color: #362d50
+      margin-bottom: 10px
+
+    ul
+      list-style: none
+      padding: 0
+
+      li
+        font-size: 16px
+        color: #9db5b2
+        padding: 5px 0
+
+  .backButton
+    display: inline-block
+    margin-top: 20px
+    background-color: rgb(92, 201, 179)
+    color: #fff
+    padding: 10px 15px
+    border-radius: 5px
+    text-decoration: none
+    text-align: center
+    font-size: 16px
+    transition: background-color 0.3s ease
+
+    &:hover
+      background-color: rgb(54, 134, 169)
+
+@media (max-width: 600px)
+  .profileContainer
+    width: 100%
+    max-width: 340px
+    margin: 40% auto

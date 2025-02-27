@@ -1,0 +1,85 @@
+.log_box
+  width: 100%
+  max-width: 400px
+  margin: 50px auto
+
+  .h1
+    background-color: #94d1be
+    border-top-right-radius: 5px
+    border-top-left-radius: 5px
+    padding: 10px
+    font-size: 24px
+    line-height: 1.4
+
+  .google_login
+    display: flex
+    justify-content: center
+    margin-top: 10px
+
+  .google_btn
+    display: flex
+    align-items: center
+    gap: 10px
+    border: 1px solid rgba(191, 216, 227, .8)
+    border-radius: 5px
+    background-color: white
+    padding: 10px 15px
+    font-size: 110%
+    cursor: pointer
+    transition: background 0.3s ease
+    color: #33415a
+
+    img
+      width: 20px
+      height: 20px
+
+    &:hover
+      border-color: #333
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2)
+
+  .login
+    background-color: #9db5b2
+    border: 1px solid rgba(191, 216, 227, .8)
+    border-bottom-right-radius: 5px
+    border-bottom-left-radius: 5px
+    padding: 10px
+    margin-bottom: 10px
+
+    > div
+      padding: 5px 0
+
+  input[type="submit"]
+    border: 1px solid rgba(191, 216, 227, .8)
+    border-radius: 5px
+    color: #fff
+    background-color: rgb(92, 201, 179)
+    font-size: 110%
+    width: 100%
+
+  input[type="text"],
+  input[type="password"]
+    border: 1px solid rgba(191, 216, 227, .8)
+    padding: 5px
+    border-radius: 5px
+    font-size: 110%
+    width: 100%
+
+  .forgot
+    font-size: 80%
+    color: #ffffff
+    transition: color 0.3s ease
+
+    &:hover
+      color: rgb(54, 134, 169)
+
+  .account
+    padding-top: 10px
+
+  .contact
+    padding-top: 10px
+
+@media (max-width: 600px) 
+  .log_box
+    width: 100%
+    max-width: 300px
+    margin: 40% auto
