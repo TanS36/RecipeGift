@@ -1,34 +1,45 @@
 import './Navigate.css';
+import { Link } from "react-router-dom";
+
+const favoriteFoods = [
+  {
+    id: 1,
+    title: "Pizza",
+  },
+  {
+    id: 2,
+    title: "Sushi",
+  },
+  {
+    id: 3,
+    title: "Burgers",
+  },
+  {
+    id: 4,
+    title: "Sandwich",
+  },
+  {
+    id: 5,
+    title: "Salad",
+  },
+  {
+    id: 6,
+    title: "Macarune",
+  },
+];
+
+
 
 function Navigate() {
   return (
     <aside>
      <h2>Поиск рецептов</h2>
-      <ul>
-        <li>Макаруны</li>
-        <li>Пирог А Ла Моде</li>
-        <li>Клубника в шоколаде</li>
-        <li>Черничный торт</li>
-        <li>Макаруны</li>
-        <li>Пирог А Ла Моде</li>
-        <li>Клубника в шоколаде</li>
-        <li>Черничный торт</li>
-        <li>Макаруны</li>
-        <li>Пирог А Ла Моде</li>
-        <li>Клубника в шоколаде</li>
-        <li>Черничный торт</li>
-        <li>Макаруны</li>
-        <li>Пирог А Ла Моде</li>
-        <li>Клубника в шоколаде</li>
-        <li>Черничный торт</li>
-        <li>Макаруны</li>
-        <li>Пирог А Ла Моде</li>
-        <li>Клубника в шоколаде</li>
-        <li>Черничный торт</li>
-        <li>Макаруны</li>
-        <li>Пирог А Ла Моде</li>
-        <li>Клубника в шоколаде</li>
-        <li>Черничный торт</li>
+     <ul>
+        {favoriteFoods.map((food) => (
+          <li key={food.id}>
+            <Link to={`/maker/${food.title}`}>{food.title}</Link>
+          </li>
+        ))}
       </ul>
     </aside> 
   );

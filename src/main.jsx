@@ -12,6 +12,7 @@ import Search from './components/Search';
 import Login from "./pages/loginpage.jsx";
 import Profile from "./pages/profilepage.jsx";
 import Register from "./pages/reqisterpage.jsx"
+import MakerPage from "./pages/makerpage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     children: [
       { path: "contacts/:contactId", element: <Contact /> },
       { path: "search", element: <Search /> }, 
+      { path: "maker/:title", element: <MakerPage /> },
     ],
   },
   { path: "/login", element: <Login /> }, 
