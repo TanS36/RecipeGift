@@ -1,5 +1,5 @@
-import './Navigate.css';
 import { Link } from "react-router-dom";
+import styles from '../assets/navigate.module.sass';
 
 const favoriteFoods = [
   {
@@ -33,7 +33,7 @@ const favoriteFoods = [
 function Navigate() {
   return (
     <aside>
-     <h2>Поиск рецептов</h2>
+     <h2 className={styles.Menu}>Поиск рецептов</h2>
      <ul>
         {favoriteFoods.map((food) => (
           <li key={food.id}>

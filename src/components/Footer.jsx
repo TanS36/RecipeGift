@@ -1,8 +1,8 @@
-import './Footer.css';
+import styles from '../assets/footer.module.sass';
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className={styles.footer}>
       <p>© RecipeGift 2025. Все права защищены.</p>
     </footer>
   );

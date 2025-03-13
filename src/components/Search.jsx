@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Contact from "../pages/contact"; 
+import styles from '../assets/search.module.sass';
 
 const favoriteFoods = [
   {
@@ -55,7 +56,7 @@ function Search() {
       <input
         type="text"
         placeholder="Поиск рецептов..."
-        className="search-input"
+        className={styles.search_input}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
