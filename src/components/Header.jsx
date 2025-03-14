@@ -19,9 +19,8 @@ function Header() {
       <h1>RecipeGift</h1>
       <nav>
         <ul>
-          <li className={styles.Menu}>Main</li>
-          <li className={styles.Menu}>Recipe</li>
-          <li className={styles.Menu}>Maker</li>
+          <li className={styles.Menu} onClick={() => navigate("/")}>Main</li>
+          <li className={styles.Menu} onClick={() => navigate("/maker")}>Maker</li>
           <li className={styles.Menu} onClick={handleAuth}>
             {isAuthenticated ? "Profile" : "Login"}
           </li>

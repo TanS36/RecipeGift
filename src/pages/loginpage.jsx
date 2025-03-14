@@ -23,14 +23,11 @@ function Login() {
             Login with Google
           </button>
         </div>
-        <div className={styles.forgot}>
+        <div className={styles.google_login}>
           <a href="/forgot">I forgot my password</a>
         </div>
-        <div className={styles.account}>
+        <div className={styles.google_login}>
           <p>Create a new account <a href="/register">here</a>.</p>
-        </div>
-        <div className={styles.contact}>
-          <p>If you need any other help, please contact the helpdesk.</p>
         </div>
       </form>
     </div>

@@ -22,12 +22,12 @@ const router = createBrowserRouter([
     children: [
       { path: "contacts/:contactId", element: <Contact /> },
       { path: "search", element: <Search /> }, 
-      { path: "maker/:title", element: <MakerPage /> },
     ],
   },
   { path: "/login", element: <Login /> }, 
   { path: "/register", element: <Register /> },
   { path: "/profile", element: <Profile /> }, 
+  { path: "/maker", element: <MakerPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

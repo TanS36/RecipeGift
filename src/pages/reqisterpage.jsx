@@ -24,10 +24,10 @@ function Register() {
         <div className={styles.actions}>
           <input type="submit" value="Register" />
         </div>
+        <div className={styles.login_link}>
+          <p>Already have an account? <a href="/login">Login here</a>.</p>
+        </div>
       </form>
-      <div className={styles.login_link}>
-        <p>Already have an account? <a href="/login">Login here</a>.</p>
-      </div>
     </div>
   );
 }
