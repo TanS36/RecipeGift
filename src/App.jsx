@@ -1,3 +1,4 @@
+//App.jsx
 import './App.css';
 import Header from './components/Header';
 import Search from './components/Search';

@@ -1,6 +1,33 @@
+import { useState } from 'react';
 import styles from '../assets/register.module.sass';
+import axios from 'axios';
 
 function Register() {
+
+  const Register = () => {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const userData = {
+        username,
+        email,
+        password
+      };
+
+      try {
+        const response = await axios.post('http://localhost:8080/api/auth/register',userData).
+        setMessage(response.data);
+      } catch (error) {
+        setMessage('Registration failed');
+      }
+    }
+  };
+
   return (
     <div className={styles.reg_box}>
       <h1 className={styles.h1}>Create an Account</h1>
@@ -29,6 +56,8 @@ function Register() {
         </div>
       </form>
     </div>
+
+
   );
 }
 
