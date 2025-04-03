@@ -1,12 +1,16 @@
 //main.jsx
-import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import './index.css';
-import { RouterProvider } from "react-router-dom";
-import AppRoutes from "./routes/AppRoutes";
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { RouterProvider } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes'; // Import your router
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={AppRoutes} />
-  </React.StrictMode>
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <Provider store={store}>
+        <RouterProvider router={AppRoutes} />
+    </Provider>
 );
+
+

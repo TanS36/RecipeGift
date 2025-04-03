@@ -25,7 +25,7 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public ResponseEntity<Object> registerUser(String email, String password, String name) {
+    public ResponseEntity<Object> registerUser(String email, String password, String name, String provider) {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new UserAlreadyExistsException("User with email " + email + " already exists.");
         }
@@ -34,7 +34,12 @@ public class AuthService {
         user.setName(name);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        user.setProvider("local");
+
+        if (provider == null || provider.isEmpty()) {
+            user.setProvider("local");
+        } else {
+            user.setProvider(provider);
+        }
 
         userRepository.save(user);
         return ResponseEntity.ok(Collections.singletonMap("message", "User registered successfully!"));
