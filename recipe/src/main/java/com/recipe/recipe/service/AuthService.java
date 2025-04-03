@@ -1,6 +1,7 @@
 package com.recipe.recipe.service;
 
-import com.recipe.recipe.config.PasswordEncoderConfig;
+import com.recipe.recipe.exception.UserAlreadyExistsException;
+import com.recipe.recipe.exception.InvalidCredentialsException;
 import com.recipe.recipe.models.User;
 import com.recipe.recipe.repository.UserRepository;
 import com.recipe.recipe.security.JwtUtil;
@@ -24,13 +25,13 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public ResponseEntity<Object> registerUser(String email, String password, String Name) {
+    public ResponseEntity<Object> registerUser(String email, String password, String name) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            throw new UserAlreadyExistsException("User with email " + email + " already exists.");
         }
 
         User user = new User();
-        user.setName(Name);
+        user.setName(name);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setProvider("local");
@@ -40,9 +41,11 @@ public class AuthService {
     }
 
     public String loginUser(String email, String password) {
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isEmpty() || !passwordEncoder.matches(password, userOpt.get().getPassword())) {
-            throw new RuntimeException("Invalid email or password");
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid email or password."));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new InvalidCredentialsException("Invalid email or password.");
         }
 
         return jwtUtil.generateToken(email);
