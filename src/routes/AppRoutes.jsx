@@ -5,7 +5,7 @@ import Contact from "../pages/contact";
 import Search from "../components/Search";
 import Login from "../pages/loginpage";
 import Profile from "../pages/profilepage";
-import Register from "../pages/reqisterpage";
+import Register from "../pages/registerpage.jsx";
 import MakerPage from "../pages/makerpage";
 
 const AppRoutes = createBrowserRouter([
