@@ -14,14 +14,18 @@ function Login() {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" />
         </div>
-        <div className={styles.actions}>
-          <input type="submit" name="login" value="Login" />
-        </div>
-        <div className={styles.google_login}>
-          <button className={styles.google_btn}>
-            <img src={googleLogo} alt="Google logo" />
-            Login with Google
-          </button>
+        <div className={styles.login_panel}>
+          <div className={styles.google_login}>
+            <button type="submit" name="login" className={styles.google_btn}>
+            Login
+            </button>
+          </div>
+          <div className={styles.google_login}>
+            <button className={styles.google_btn}>
+              <img src={googleLogo} alt="Google logo" />
+              Login with Google
+            </button>
+          </div>
         </div>
         <div className={styles.google_login}>
           <a href="/forgot">I forgot my password</a>

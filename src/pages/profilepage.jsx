@@ -10,6 +10,9 @@ export default function ProfilePage() {
     twitter: "frontend_karim",
     notes: "Frontend developer & tech enthusiast",
     favorite: true,
+    age: 18,
+    class: "3rd year",
+    course: "Web Development",
   };
 
   const favoriteFoods = [
@@ -37,6 +40,20 @@ export default function ProfilePage() {
     <div className={styles.profileContainer}>
       <div className={styles.profileContent}>
         <Contact contact={contact} />
+
+        <div className={styles.userInfoSection}>
+          <div className={styles.userInfoHeader}>
+            <img src={contact.avatar} alt="User Avatar" className={styles.userAvatar} />
+            <div>
+              <h3>Информация о пользователе</h3>
+              <p><strong>Возраст:</strong> {contact.age}</p>
+              <p><strong>Класс:</strong> {contact.class}</p>
+              <p><strong>Курс:</strong> {contact.course}</p>
+            </div>
+          </div>
+        </div>
+
+        <hr className={styles.divider} />
 
         <div className={styles.favoriteFoods}>
           <h3>Любимые блюда:</h3>
@@ -82,3 +99,4 @@ function FoodCard({ food }) {
     </div>
   );
 }
+

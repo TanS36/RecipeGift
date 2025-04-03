@@ -25,6 +25,24 @@ export default function MakerPage() {
       title: "Burgers",
       description: "Сочные бургеры с разными начинками.",
     },
+    {
+      id: 4,
+      image: "https://i.pinimg.com/736x/da/33/12/da331278c558c22171aff64edf5dd8f4.jpg",
+      title: "Sandwich",
+      description: "Сочные бургеры с разными начинками.",
+    },
+    {
+      id: 5,
+      image: "https://i.pinimg.com/736x/da/33/12/da331278c558c22171aff64edf5dd8f4.jpg",
+      title: "Salad",
+      description: "Сочные бургеры с разными начинками.",
+    },
+    {
+      id: 6,
+      image: "https://i.pinimg.com/736x/da/33/12/da331278c558c22171aff64edf5dd8f4.jpg",
+      title: "Macarune",
+      description: "Сочные бургеры с разными начинками.",
+    },
   ]);
   
   const [newRecipe, setNewRecipe] = useState({ title: "", description: "", image: "" });
