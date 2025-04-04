@@ -2,6 +2,7 @@ package com.recipe.recipe.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,13 +14,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(unique = true, nullable = false)
     private String email;
-    
+
     private String password;
-    
+
     private String name;
 
-    private String provider;  // "local" or "google"
+    private Integer age;
+
+    private String profilePictureUrl;
+
+    @ElementCollection
+    private List<String> favoriteFoods;
+
+    private String providerType; // "local" or "google"
 }

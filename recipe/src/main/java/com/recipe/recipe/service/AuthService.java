@@ -36,9 +36,9 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(password));
 
         if (provider == null || provider.isEmpty()) {
-            user.setProvider("local");
+            user.setProviderType("local"); // Updated line
         } else {
-            user.setProvider(provider);
+            user.setProviderType(provider); // Updated line
         }
 
         userRepository.save(user);
