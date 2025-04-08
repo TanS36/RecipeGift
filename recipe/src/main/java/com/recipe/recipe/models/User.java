@@ -30,4 +30,6 @@ public class User {
     private List<String> favoriteFoods;
 
     private String providerType; // "local" or "google"
+
+    private String providerId;   // Unique ID from the provider (e.g., Google's sub)
 }

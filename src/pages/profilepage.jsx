@@ -1,6 +1,8 @@
 import { Form } from "react-router-dom";
 import styles from "../assets/profile.module.sass";
 import Contact from "./contact";
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function ProfilePage() {
   const contact = {
@@ -37,7 +39,9 @@ export default function ProfilePage() {
   ];
 
   return (
-    <div className={styles.profileContainer}>
+  <>
+  <Header />
+  <div className={styles.profileContainer}>
       <div className={styles.profileContent}>
         <Contact contact={contact} />
 
@@ -65,6 +69,8 @@ export default function ProfilePage() {
         </div>
       </div>
     </div>
+    <Footer />
+  </>
   );
 }
 
