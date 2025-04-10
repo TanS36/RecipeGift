@@ -1,24 +1,23 @@
 package com.recipe.recipe.controller.admin;
 
-import com.recipe.recipe.models.User; // Assuming you have a User model
-import com.recipe.recipe.service.UserService; // Assuming you have a UserService
+import com.recipe.recipe.models.User;
+import com.recipe.recipe.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 
-import jakarta.servlet.http.HttpServletResponse; // Changed import
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminAuthController {
+
+    @Autowired
+    private UserService userService;
 
     @Value("${admin.username}")
     private String adminUsername;
@@ -26,14 +25,28 @@ public class AdminAuthController {
     @Value("${admin.password}")
     private String adminPassword;
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsersForAdmin() {
-        // Implement logic to fetch all users (or a subset)
-        List<User> users = userService.getAllUsers(); // Assuming this method exists in your UserService
+        List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<User> createUser(@RequestBody User newUser) {
+        User createdUser = userService.createUser(newUser);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        User updated = userService.updateUserByAdmin(id, updatedUser);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
     }
 
     @PostMapping("/login")
@@ -43,15 +56,10 @@ public class AdminAuthController {
         String password = credentials.get("password");
 
         if (adminUsername.equals(username) && adminPassword.equals(password)) {
-            // In a more secure scenario, you might generate a short-lived, admin-specific JWT here
-            // and return it. For this simplified approach, you could set a cookie.
-            // Example of setting an HTTP-only cookie (more secure than a JS-accessible token):
-            // String adminToken = generateAdminToken(); // Implement a token generation logic
-            // response.setHeader("Set-Cookie", "admin_token=" + adminToken + "; HttpOnly; Secure; Path=/");
-
             return ResponseEntity.ok(Map.of("message", "Admin login successful"));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
         }
+
     }
 }

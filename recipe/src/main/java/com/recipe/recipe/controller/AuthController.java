@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Collections;
 
 import java.util.Map;
 
@@ -20,8 +21,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> body) {
-        return authService.loginUser(body.get("email"), body.get("password"));
-
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> body) {
+        String token = authService.loginUser(body.get("email"), body.get("password"));
+        return ResponseEntity.ok(Collections.singletonMap("token", token));
     }
 }
