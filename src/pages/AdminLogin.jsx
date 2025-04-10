@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './AdminLogin.css'; // Import the CSS file
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ const AdminLogin = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const backendUrl = 'http://localhost:8080/api/admin/auth/login';
+            const backendUrl = 'http://localhost:8080/api/admin/login';
             const response = await fetch(backendUrl, {
                 method: 'POST',
                 headers: {
@@ -20,13 +21,9 @@ const AdminLogin = () => {
             });
 
             if (response.ok) {
-                // On successful login, you might:
-                // - Store an admin-specific token in local storage or a cookie (less secure for XSS).
-                // - Set a state indicating the user is logged in as admin.
-                // For simplicity in this example, we'll just set a local storage item.
                 const data = await response.json();
                 localStorage.setItem('isAdminLoggedIn', 'true');
-                navigate('/admin'); // Redirect to the admin panel
+                navigate('/admin');
             } else {
                 const errorData = await response.json();
                 setError(errorData.error || 'Login failed');
@@ -37,31 +34,33 @@ const AdminLogin = () => {
     };
 
     return (
-        <div>
-            <h1>Admin Login</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="username">Username:</label>
+        <div className="admin-login-container">
+            <h1 className="admin-login-heading">Admin Login</h1>
+            {error && <p className="admin-login-error">{error}</p>}
+            <form onSubmit={handleSubmit} className="admin-login-form">
+                <div className="admin-login-input-group">
+                    <label htmlFor="username" className="admin-login-label">Username:</label>
                     <input
                         type="text"
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
+                        className="admin-login-input"
                     />
                 </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
+                <div className="admin-login-input-group">
+                    <label htmlFor="password" className="admin-login-label">Password:</label>
                     <input
                         type="password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        className="admin-login-input"
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className="admin-login-button">Login</button>
             </form>
         </div>
     );

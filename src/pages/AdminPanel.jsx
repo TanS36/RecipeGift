@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import './AdminPanel.css'; // Import the CSS file
 
 const AdminPanel = () => {
     const navigate = useNavigate();
@@ -7,10 +8,8 @@ const AdminPanel = () => {
     useEffect(() => {
         const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
         if (!isAdminLoggedIn) {
-            navigate('/admin/login'); // Redirect if not logged in
+            navigate('/admin/login');
         }
-        // You would fetch admin data here using the admin-specific authentication
-        // (e.g., checking for the cookie or including the admin JWT in headers).
     }, [navigate]);
 
     const handleLogout = () => {
@@ -19,11 +18,17 @@ const AdminPanel = () => {
     };
 
     return (
-        <div>
-            <h1>Admin Panel</h1>
-            <p>Welcome, Admin!</p>
-            <button onClick={handleLogout}>Logout</button>
-            {/* Components for managing users, recipes, categories would go here */}
+        <div className="admin-panel-container">
+            <h1 className="admin-panel-heading">Admin Panel</h1>
+            <p className="admin-panel-welcome">Welcome, Admin!</p>
+            <nav className="admin-panel-navigation">
+                <Link to="/admin/users" className="admin-panel-link">Manage Users</Link>
+                <Link to="/admin/recipes" className="admin-panel-link">Manage Recipes</Link>
+                <Link to="/admin/categories" className="admin-panel-link">Manage Categories</Link>
+            </nav>
+            <button onClick={handleLogout} className="admin-panel-logout-button">Logout</button>
+
+            {/* The content of the specific management section will be rendered by the Router */}
         </div>
     );
 };

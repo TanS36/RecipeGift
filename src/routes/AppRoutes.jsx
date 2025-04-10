@@ -7,9 +7,10 @@ import Login from "../pages/loginpage";
 import Profile from "../pages/profilepage";
 import Register from "../pages/registerpage.jsx";
 import MakerPage from "../pages/makerpage";
-import AdminLogin from "../pages/AdminLogin"; // Import the AdminLogin component
-import AdminPanel from "../pages/AdminPanel"; // Import the AdminPanel component
-import AdminRoute from "../routes/AdminRoute"; // Import the AdminRoute component
+import AdminLogin from "../pages/AdminLogin";
+import AdminPanel from "../pages/AdminPanel";
+import AdminRoute from "../routes/AdminRoute";
+import UserManagement from "../pages/admin/UserManagement"; // Import UserManagement
 
 const AppRoutes = createBrowserRouter([
   {
@@ -25,14 +26,13 @@ const AppRoutes = createBrowserRouter([
   { path: "/register", element: <Register /> },
   { path: "/profile", element: <Profile /> },
   { path: "/maker", element: <MakerPage /> },
-  { path: "/admin/login", element: <AdminLogin /> }, // Route for the admin login page
+  { path: "/admin/login", element: <AdminLogin /> },
   {
     path: "/admin",
-    element: <AdminRoute />, // Use the AdminRoute for protection
+    element: <AdminRoute />,
     children: [
-      { index: true, element: <AdminPanel /> }, // The main admin panel page
-      // Add other admin-related routes as children here, e.g.,
-      // { path: "users", element: <AdminUsers /> },
+      { index: true, element: <AdminPanel /> },
+      { path: "users", element: <UserManagement /> }, // Add the users route
       // { path: "recipes", element: <AdminRecipes /> },
       // { path: "categories", element: <AdminCategories /> },
     ],

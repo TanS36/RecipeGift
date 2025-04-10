@@ -1,18 +1,23 @@
 package com.recipe.recipe.controller.admin;
 
+import com.recipe.recipe.models.User; // Assuming you have a User model
+import com.recipe.recipe.service.UserService; // Assuming you have a UserService
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletResponse; // Changed import
 import java.util.Map;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/auth")
+@RequestMapping("/api/admin")
 public class AdminAuthController {
 
     @Value("${admin.username}")
@@ -20,6 +25,16 @@ public class AdminAuthController {
 
     @Value("${admin.password}")
     private String adminPassword;
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsersForAdmin() {
+        // Implement logic to fetch all users (or a subset)
+        List<User> users = userService.getAllUsers(); // Assuming this method exists in your UserService
+        return ResponseEntity.ok(users);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> adminLogin(@RequestBody Map<String, String> credentials,
