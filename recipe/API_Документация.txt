@@ -1,176 +1,278 @@
-Документация API "Рецепты"
+# API Documentation for "Recipes" Application
 
-Введение
+## Introduction
 
-Этот документ описывает API для приложения "Рецепты", позволяющего пользователям регистрироваться, входить в систему, просматривать рецепты, создавать рецепты и управлять профилями.
+This document describes the API for the "Recipes" application, allowing users to register, log in, browse recipes, create recipes, manage profiles, manage favorite foods, and administrators to manage users.
 
-Аутентификация
+## Authentication
 
-Все защищенные конечные точки API требуют аутентификации с использованием JWT (JSON Web Tokens). Токен JWT должен быть включен в заголовок Authorization каждого запроса в формате Bearer <token>.
+Most API endpoints require authentication.
 
-Конечные точки API
+**User Authentication:** Authenticated user endpoints typically use JWT (JSON Web Tokens). The JWT token should be included in the `Authorization` header of each request in the format `Bearer <token>`.
 
-1. Аутентификация
+**Admin Authentication:** Admin-specific endpoints may use a different authentication mechanism (e.g., session cookies, a separate admin JWT). Refer to the specific admin endpoint documentation for details.
 
-Регистрация пользователя (POST /api/auth/register)
-Описание: Регистрирует нового пользователя.
-Метод: POST
-URL: /api/auth/register
-Заголовки: Content-Type: application/json
-Тело запроса (JSON):
-JSON
+## API Endpoints
 
-{
-    "email": "пользователь@пример.com",
-    "password": "пароль123",
-    "name": "Имя Пользователя",
-    "provider": "local"
-}
-Ответ:
-Код состояния: 200 OK
-Тело ответа: {"message": "Пользователь успешно зарегистрирован!"}
-Вход пользователя (POST /api/auth/login)
-Описание: Аутентифицирует пользователя и возвращает JWT.
-Метод: POST
-URL: /api/auth/login
-Заголовки: Content-Type: application/json
-Тело запроса (JSON):
-JSON
+### 1. User Authentication
 
-{
-    "email": "пользователь@пример.com",
-    "password": "пароль123"
-}
-Ответ:
-Код состояния: 200 OK
-Тело ответа: JWT токен (строка).
-2. Профиль пользователя
+#### 1.1. User Registration (POST /api/auth/register)
 
-Получение профиля текущего пользователя (GET /api/users/profile)
-Описание: Возвращает профиль текущего авторизованного пользователя.
-Метод: GET
-URL: /api/users/profile?userId=1 (замените 1 на ID пользователя)
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Данные профиля пользователя (JSON).
-Обновление профиля пользователя (PUT /api/users/profile)
-Описание: Обновляет профиль текущего авторизованного пользователя.
-Метод: PUT
-URL: /api/users/profile?userId=1 (замените 1 на ID пользователя)
-Заголовки: Authorization: Bearer <token>, Content-Type: application/json
-Тело запроса (JSON):
-JSON
+* **Description:** Registers a new user.
+* **Method:** `POST`
+* **URL:** `/api/auth/register`
+* **Headers:** `Content-Type: application/json`
+* **Request Body (JSON):**
 
-{
-    "name": "Новое Имя",
-    "age": 30,
-    "profilePictureUrl": "http://пример.com/изображение.jpg",
-    "favoriteFoods": ["Пицца", "Паста"]
-}
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Обновленные данные профиля пользователя (JSON).
-Получение профиля пользователя по ID (GET /api/users/{userId})
-Описание: Возвращает профиль пользователя по его ID.
-Метод: GET
-URL: /api/users/1 (замените 1 на ID пользователя)
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Данные профиля пользователя (JSON).
-3. Рецепты
+    ```json
+    {
+        "email": "user@example.com",
+        "password": "password123",
+        "name": "User Name",
+        "provider": "local"
+    }
+    ```
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** `{"message": "User registered successfully!"}`
 
-Получение всех рецептов (GET /api/recipes)
-Описание: Возвращает список всех рецептов.
-Метод: GET
-URL: /api/recipes
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Список рецептов (JSON).
-Получение рецепта по ID (GET /api/recipes/{recipeId})
-Описание: Возвращает рецепт по его ID.
-Метод: GET
-URL: /api/recipes/1 (замените 1 на ID рецепта)
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Данные рецепта (JSON).
-Создание рецепта (POST /api/recipes)
-Описание: Создает новый рецепт.
-Метод: POST
-URL: /api/recipes
-Заголовки: Authorization: Bearer <token>, Content-Type: application/json
-Тело запроса (JSON):
-JSON
+#### 1.2. User Login (POST /api/auth/login)
 
-{
-    "name": "Новый Рецепт",
-    "description": "Описание рецепта",
-    "imageUrl": "http://пример.com/рецепт.jpg",
-    "category": "Десерт",
-    "creator": {"id": 1}
-}
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Данные созданного рецепта (JSON).
-Обновление рецепта (PUT /api/recipes/{recipeId})
-Описание: Обновляет рецепт по его ID.
-Метод: PUT
-URL: /api/recipes/1 (замените 1 на ID рецепта)
-Заголовки: Authorization: Bearer <token>, Content-Type: application/json
-Тело запроса (JSON):
-JSON
+* **Description:** Authenticates a user and returns a JWT.
+* **Method:** `POST`
+* **URL:** `/api/auth/login`
+* **Headers:** `Content-Type: application/json`
+* **Request Body (JSON):**
 
-{
-    "name": "Обновленный Рецепт",
-    "description": "Обновленное описание рецепта",
-    "imageUrl": "http://пример.com/обновленный-рецепт.jpg",
-    "category": "Обновленная Категория",
-    "creator": {"id": 1}
-}
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Обновленные данные рецепта (JSON).
-Удаление рецепта (DELETE /api/recipes/{recipeId})
-Описание: Удаляет рецепт по его ID.
-Метод: DELETE
-URL: /api/recipes/1 (замените 1 на ID рецепта)
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Поиск рецептов (GET /api/recipes/search?query={searchQuery})
-Описание: Поиск рецептов по запросу.
-Метод: GET
-URL: /api/recipes/search?query=пицца
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Список найденных рецептов (JSON).
-Добавление рецепта в избранное (POST /api/recipes/{recipeId}/favorite)
-Описание: Добавляет рецепт в список избранных пользователя.
-Метод: POST
-URL: /api/recipes/1/favorite?userId=1
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Обновленные данные пользователя (JSON).
-Удаление рецепта из избранного (DELETE /api/recipes/{recipeId}/favorite)
-Описание: Удаляет рецепт из списка избранных пользователя.
-Метод: DELETE
-URL: /api/recipes/1/favorite?userId=1
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Обновленные данные пользователя (JSON).
-4. Категории рецептов
+    ```json
+    {
+        "email": "user@example.com",
+        "password": "password123"
+    }
+    ```
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** JWT token (string).
 
-Получение всех категорий (GET /api/categories)
-Описание: Возвращает список всех категорий рецептов.
-Метод: GET
-URL: /api/categories
-Заголовки: Authorization: Bearer <token>
-Ответ:
-Код состояния: 200 OK
-Тело ответа: Список категорий (JSON).
+#### 1.3. Google Authentication (POST /api/auth/google)
+
+* **Description:** Authenticates a user using a Google ID token.
+* **Method:** `POST`
+* **URL:** `/api/auth/google`
+* **Headers:** `Content-Type: application/json`
+* **Request Body (JSON):**
+
+    ```json
+    {
+        "token": "YOUR_GOOGLE_ID_TOKEN"
+    }
+    ```
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** `{"token": "GENERATED_JWT"}`
+
+### 2. User Profile
+
+#### 2.1. Get Current User Profile (GET /api/users/profile)
+
+* **Description:** Returns the profile of the currently authenticated user.
+* **Method:** `GET`
+* **URL:** `/api/users/profile?userId={userId}` (Replace `{userId}` with the user's ID)
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** User profile data (JSON).
+
+#### 2.2. Update User Profile (PUT /api/users/profile)
+
+* **Description:** Updates the profile of the currently authenticated user.
+* **Method:** `PUT`
+* **URL:** `/api/users/profile?userId={userId}` (Replace `{userId}` with the user's ID)
+* **Headers:** `Authorization: Bearer <token>`, `Content-Type: application/json`
+* **Request Body (JSON):**
+
+    ```json
+    {
+        "name": "New Name",
+        "age": 30,
+        "profilePictureUrl": "[http://example.com/image.jpg](http://example.com/image.jpg)",
+        "favoriteFoods": ["Pizza", "Pasta"]
+    }
+    ```
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** Updated user profile data (JSON).
+
+#### 2.3. Get User Profile by ID (GET /api/users/{userId})
+
+* **Description:** Returns the profile of a user by their ID.
+* **Method:** `GET`
+* **URL:** `/api/users/{userId}` (Replace `{userId}` with the user's ID)
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** User profile data (JSON).
+
+### 3. Recipes
+
+#### 3.1. Get All Recipes (GET /api/recipes)
+
+* **Description:** Returns a list of all recipes.
+* **Method:** `GET`
+* **URL:** `/api/recipes`
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** A list of recipes (JSON array).
+
+#### 3.2. Get Recipe by ID (GET /api/recipes/{recipeId})
+
+* **Description:** Returns a recipe by its ID.
+* **Method:** `GET`
+* **URL:** `/api/recipes/{recipeId}` (Replace `{recipeId}` with the recipe's ID)
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** Recipe data (JSON).
+
+#### 3.3. Create Recipe (POST /api/recipes)
+
+* **Description:** Creates a new recipe.
+* **Method:** `POST`
+* **URL:** `/api/recipes`
+* **Headers:** `Authorization: Bearer <token>`, `Content-Type: application/json`
+* **Request Body (JSON):**
+
+    ```json
+    {
+        "name": "New Recipe",
+        "description": "Recipe description",
+        "imageUrl": "[http://example.com/recipe.jpg](http://example.com/recipe.jpg)",
+        "category": "Dessert",
+        "creator": {"id": 1}
+    }
+    ```
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** Data of the created recipe (JSON).
+
+#### 3.4. Update Recipe (PUT /api/recipes/{recipeId})
+
+* **Description:** Updates a recipe by its ID.
+* **Method:** `PUT`
+* **URL:** `/api/recipes/{recipeId}` (Replace `{recipeId}` with the recipe's ID)
+* **Headers:** `Authorization: Bearer <token>`, `Content-Type: application/json`
+* **Request Body (JSON):**
+
+    ```json
+    {
+        "name": "Updated Recipe",
+        "description": "Updated recipe description",
+        "imageUrl": "[http://example.com/updated-recipe.jpg](http://example.com/updated-recipe.jpg)",
+        "category": "Updated Category",
+        "creator": {"id": 1}
+    }
+    ```
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** Updated recipe data (JSON).
+
+#### 3.5. Delete Recipe (DELETE /api/recipes/{recipeId})
+
+* **Description:** Deletes a recipe by its ID.
+* **Method:** `DELETE`
+* **URL:** `/api/recipes/{recipeId}` (Replace `{recipeId}` with the recipe's ID)
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** (Typically empty or a success message like `{"message": "Recipe deleted successfully"}`).
+
+#### 3.6. Search Recipes (GET /api/recipes/search?query={searchQuery})
+
+* **Description:** Searches for recipes based on a query.
+* **Method:** `GET`
+* **URL:** `/api/recipes/search?query=pizza` (Replace `pizza` with the search query)
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** A list of matching recipes (JSON array).
+
+#### 3.7. Add Recipe to Favorites (POST /api/recipes/{recipeId}/favorite)
+
+* **Description:** Adds a recipe to the authenticated user's favorites.
+* **Method:** `POST`
+* **URL:** `/api/recipes/{recipeId}/favorite?userId={userId}` (Replace `{recipeId}` and `{userId}`)
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** Updated user data with the added favorite (JSON).
+
+#### 3.8. Remove Recipe from Favorites (DELETE /api/recipes/{recipeId}/favorite)
+
+* **Description:** Removes a recipe from the authenticated user's favorites.
+* **Method:** `DELETE`
+* **URL:** `/api/recipes/{recipeId}/favorite?userId={userId}` (Replace `{recipeId}` and `{userId}`)
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** Updated user data with the removed favorite (JSON).
+
+### 4. Recipe Categories
+
+#### 4.1. Get All Categories (GET /api/categories)
+
+* **Description:** Returns a list of all recipe categories.
+* **Method:** `GET`
+* **URL:** `/api/categories`
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** A list of categories (JSON array).
+
+### 5. Favorite Foods
+
+#### 5.1. Get All Favorite Foods (GET /api/foods/favorites)
+
+* **Description:** Returns a list of all favorite foods.
+* **Method:** `GET`
+* **URL:** `/api/foods/favorites`
+* **Headers:** `Authorization: Bearer <token>`
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** A list of favorite foods (JSON array).
+
+### 6. Admin Authentication
+
+#### 6.1. Admin Login (POST /api/admin/auth/login)
+
+* **Description:** Authenticates an administrator.
+* **Method:** `POST`
+* **URL:** `/api/admin/auth/login`
+* **Headers:** `Content-Type: application/json`
+* **Request Body (JSON):**
+
+    ```json
+    {
+        "username": "admin",
+        "password": "adminpassword"
+    }
+    ```
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** `{"message": "Admin login successful"}` (Note: In a real application, this might return an admin-specific token or set a session cookie).
+    * **Status Code:** `401 Unauthorized`
+    * **Response Body:** `{"error": "Invalid credentials"}`
+
+### 7. Admin User Management
+
+#### 7.1. Get All Users (GET /api/admin/users)
+
+* **Description:** Returns a list of all users (admin access required).
+* **Method:** `GET`
+* **URL:** `/api/admin/users`
+* **Headers:** Authentication required (e.g., `Authorization: Bearer <admin_token>` or session cookie).
+* **Response:**
+    * **Status Code:** `200 OK`
+    * **Response Body:** A list of user objects (JSON array).
+
+**(Note:** You'll need to add documentation for creating, updating, and deleting users via the admin panel if you implement those features.)
