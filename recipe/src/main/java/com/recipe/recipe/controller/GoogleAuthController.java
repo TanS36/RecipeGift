@@ -54,7 +54,6 @@ public class GoogleAuthController {
                 String name = (String) payload.get("name");
                 String googleId = payload.getSubject(); // Unique Google ID
 
-                // Check if the user with this Google ID or email already exists
                 Optional<User> existingUser = userRepository.findByProviderTypeAndProviderId("google", googleId);
                 if (!existingUser.isPresent()) {
                     existingUser = userRepository.findByEmail(email);
@@ -63,9 +62,7 @@ public class GoogleAuthController {
 
                 if (existingUser.isPresent()) {
                     user = existingUser.get();
-                    // Potentially update user info if needed (e.g., name, if it changed)
                 } else {
-                    // Register a new user
                     user = new User();
                     user.setName(name);
                     user.setEmail(email);
@@ -74,8 +71,7 @@ public class GoogleAuthController {
                     userRepository.save(user);
                 }
 
-                // Generate JWT for the authenticated user
-                String jwtToken = jwtUtil.generateToken(user.getEmail());
+                String jwtToken = jwtUtil.generateToken(user.getEmail(), "ROLE_USER"); // Modified line
                 return ResponseEntity.ok(Collections.singletonMap("token", jwtToken));
 
             } else {

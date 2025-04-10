@@ -11,7 +11,7 @@ const AdminLogin = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const backendUrl = 'http://localhost:8080/api/admin/login';
+            const backendUrl = 'http://localhost:8080/api/auth/login';
             const response = await fetch(backendUrl, {
                 method: 'POST',
                 headers: {
