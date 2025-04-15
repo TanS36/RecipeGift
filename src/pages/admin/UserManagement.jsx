@@ -18,11 +18,15 @@ const UserManagement = () => {
         setLoading(true);
         setError('');
         try {
-            const adminToken = localStorage.getItem('adminToken'); // Assuming you store the token in local storage
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                setError('No token found');
+                return;
+            }
 
-            const response = await fetch('/api/admin/users', {
+            const response = await fetch('http://localhost:8080/api/auth/admin/users', {
                 headers: {
-                    'Authorization': `Bearer ${adminToken}`, // Include the token
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             if (!response.ok) {
@@ -50,7 +54,7 @@ const UserManagement = () => {
     const handleCreateSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/admin/users', {
+            const response = await fetch('http://localhost:8080/api/auth/admin/users', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newUser),
@@ -78,7 +82,7 @@ const UserManagement = () => {
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`/api/admin/users/${editedUser.id}`, {
+            const response = await fetch(`http://localhost:8080/api/auth/admin/users/${editedUser.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -101,7 +105,7 @@ const UserManagement = () => {
     const handleDeleteClick = async (id) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
             try {
-                const response = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
+                const response = await fetch(`http://localhost:8080/api/auth/admin/users/${id}`, { method: 'DELETE' });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -125,6 +129,14 @@ const UserManagement = () => {
                 <div className="create-user-form">
                     <h3>Create New User</h3>
                     <form onSubmit={handleCreateSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="email">Email:</label>
+                            <input type="email" id="email" name="email" value={newUser.email} onChange={handleCreateInputChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password:</label>
+                            <input type="password" id="password" name="password" value={newUser.password} onChange={handleCreateInputChange} required />
+                        </div>
                         <div className="form-group">
                             <label htmlFor="name">Name:</label>
                             <input type="text" id="name" name="name" value={newUser.name} onChange={handleCreateInputChange} required />

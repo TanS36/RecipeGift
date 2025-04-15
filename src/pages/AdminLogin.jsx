@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminLogin.css'; // Import the CSS file
+import './AdminLogin.css';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -8,28 +8,40 @@ const AdminLogin = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("handleSubmit called");
+
         try {
-            const backendUrl = 'http://localhost:8080/api/admin/login';
-            const response = await fetch(backendUrl, {
+            console.log("Fetching login data...");
+            const response = await fetch('http://localhost:8080/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({
+                    email: username,
+                    password: password,
+                }),
             });
+
+            console.log("Response:", response);
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('isAdminLoggedIn', 'true');
-                navigate('/admin');
+                console.log("Data:", data);
+                console.log("Token stored:", data.token);
+                localStorage.setItem('jwtToken', data.token);
+                console.log("Navigating to /admin"); // Changed navigation path
+                navigate('/admin'); // Changed navigation path
+                console.log("Navigated to /admin");
             } else {
-                const errorData = await response.json();
-                setError(errorData.error || 'Login failed');
+                console.log("Invalid credentials");
+                setError('Invalid credentials');
             }
         } catch (error) {
-            setError('Network error');
+            console.log("Error:", error);
+            setError('Login failed');
         }
     };
 

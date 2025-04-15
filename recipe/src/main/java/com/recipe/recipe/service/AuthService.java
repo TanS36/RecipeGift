@@ -36,9 +36,9 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(password));
 
         if (provider == null || provider.isEmpty()) {
-            user.setProviderType("local"); // Updated line
+            user.setProviderType("local");
         } else {
-            user.setProviderType(provider); // Updated line
+            user.setProviderType(provider);
         }
 
         userRepository.save(user);
@@ -53,6 +53,6 @@ public class AuthService {
             throw new InvalidCredentialsException("Invalid email or password.");
         }
 
-        return jwtUtil.generateToken(email);
+        return jwtUtil.generateToken(email, "ROLE_USER"); // Modified line
     }
 }
