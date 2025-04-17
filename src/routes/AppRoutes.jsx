@@ -9,8 +9,7 @@ import Register from "../pages/registerpage.jsx";
 import MakerPage from "../pages/makerpage";
 import AdminLogin from "../pages/AdminLogin";
 import AdminPanel from "../pages/AdminPanel";
-import AdminRoute from "../routes/AdminRoute";
-import UserManagement from "../pages/admin/UserManagement"; // Import UserManagement
+import UserManagement from "../pages/admin/UserManagement";
 
 const AppRoutes = createBrowserRouter([
   {
@@ -29,12 +28,9 @@ const AppRoutes = createBrowserRouter([
   { path: "/admin/login", element: <AdminLogin /> },
   {
     path: "/admin",
-    element: <AdminRoute />,
     children: [
       { index: true, element: <AdminPanel /> },
-      { path: "users", element: <UserManagement /> }, // Add the users route
-      // { path: "recipes", element: <AdminRecipes /> },
-      // { path: "categories", element: <AdminCategories /> },
+      { path: "users", element: <UserManagement /> },
     ],
   },
 ]);

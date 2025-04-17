@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './AdminPanel.css'; // Import the CSS file
+import './AdminPanel.css';
 
 const AdminPanel = () => {
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ const AdminPanel = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('isAdminLoggedIn');
+        localStorage.removeItem('jwtToken'); // Remove JWT on logout
         navigate('/admin/login');
     };
 
@@ -27,8 +28,6 @@ const AdminPanel = () => {
                 <Link to="/admin/categories" className="admin-panel-link">Manage Categories</Link>
             </nav>
             <button onClick={handleLogout} className="admin-panel-logout-button">Logout</button>
-
-            {/* The content of the specific management section will be rendered by the Router */}
         </div>
     );
 };
