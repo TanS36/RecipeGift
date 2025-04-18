@@ -44,7 +44,7 @@ export default function MakerPage() {
       description: "Сочные бургеры с разными начинками.",
     },
   ]);
-  
+
   const [newRecipe, setNewRecipe] = useState({ title: "", description: "", image: "" });
   const [editingId, setEditingId] = useState(null);
 
@@ -70,51 +70,51 @@ export default function MakerPage() {
   };
 
   return (
-    <>
-    <Header />
-    <div className={styles.makerContainer}>
-      <h2>Управление рецептами</h2>
-      <div className={styles.inputMaker}>
-        <input
-          type="text"
-          placeholder="Название блюда"
-          value={newRecipe.title}
-          onChange={(e) => setNewRecipe({ ...newRecipe, title: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Описание"
-          value={newRecipe.description}
-          onChange={(e) => setNewRecipe({ ...newRecipe, description: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="URL изображения"
-          value={newRecipe.image}
-          onChange={(e) => setNewRecipe({ ...newRecipe, image: e.target.value })}
-        />
-        {editingId ? (
-          <button onClick={handleUpdateRecipe}>Обновить</button>
-        ) : (
-          <button onClick={handleAddRecipe}>Добавить</button>
-        )}
-      </div>
-      <div className={styles.recipeList}>
-        {recipes.map((recipe) => (
-          <div key={recipe.id} className={styles.recipeCard}>
-            <img src={recipe.image} alt={recipe.title} className={styles.foodImage} />
-            <div className={styles.textbox}>
-              <h3>{recipe.title}</h3>
-              <p>{recipe.description}</p>
-            </div>
-            <button onClick={() => handleEditRecipe(recipe.id)}>Редактировать</button>
-            <button onClick={() => handleDeleteRecipe(recipe.id)}>Удалить</button>
+      <>
+        <Header />
+        <div className={styles.makerContainer}>
+          <h2>Управление рецептами</h2>
+          <div className={styles.inputMaker}>
+            <input
+                type="text"
+                placeholder="Название блюда"
+                value={newRecipe.title}
+                onChange={(e) => setNewRecipe({ ...newRecipe, title: e.target.value })}
+            />
+            <input
+                type="text"
+                placeholder="Описание"
+                value={newRecipe.description}
+                onChange={(e) => setNewRecipe({ ...newRecipe, description: e.target.value })}
+            />
+            <input
+                type="text"
+                placeholder="URL изображения"
+                value={newRecipe.image}
+                onChange={(e) => setNewRecipe({ ...newRecipe, image: e.target.value })}
+            />
+            {editingId ? (
+                <button onClick={handleUpdateRecipe}>Обновить</button>
+            ) : (
+                <button onClick={handleAddRecipe}>Добавить</button>
+            )}
           </div>
-        ))}
-      </div>
-    </div>
-    <Footer />
-    </>
+          <div className={styles.recipeList}>
+            {recipes.map((recipe) => (
+                <div key={recipe.id} className={styles.recipeCard}>
+                  <img src={recipe.image} alt={recipe.title} className={styles.foodImage} />
+                  <div className={styles.textbox}>
+                    <h3>{recipe.title}</h3>
+                    <p>{recipe.description}</p>
+                  </div>
+                  <button onClick={() => handleEditRecipe(recipe.id)}>Редактировать</button>
+                  <button onClick={() => handleDeleteRecipe(recipe.id)}>Удалить</button>
+                </div>
+            ))}
+          </div>
+        </div>
+        <Footer />
+      </>
   );
 }
 

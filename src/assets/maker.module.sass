@@ -2,41 +2,94 @@
     padding: 20px 5px
     display: flex
     flex-direction: column
+    background-color: #ffffff
+    color: #000000
+
+    @media (prefers-color-scheme: light)
+        background-color: #242725
+        color: rgba(255, 255, 255, 0.87)
+
     h2
-     margin: 0 auto 10px
+        margin: 0 auto 10px
+
     .inputMaker
         margin: 0 auto 20px
         padding: 10px
         border-radius: 5px
         max-width: 80%
-        background-color: #fff 
+        background-color: #333333
+        color: rgba(255, 255, 255, 0.87)
+
+        @media (prefers-color-scheme: light)
+            background-color: #dddddd
+            color: #000000
+
         input
             max-width: 700px
-            margin: 0.25em 
+            margin: 0.25em
+            color: #000000
+            background-color: #ffffff
+
+            @media (prefers-color-scheme: light)
+                color: #000000
+                background-color: #ffffff
+
         button
             font-size: 20px
+            background-color: #333333
+            color: rgba(255, 255, 255, 0.87)
+            border: 1px solid #555555
+
+            @media (prefers-color-scheme: light)
+                background-color: #555555
+                color: #ffffff
+                border: 1px solid #888888
+
     .recipeList
         display: flex
         flex-wrap: wrap
+
         .recipeCard
-            background-color: #fff
+            background-color: #dddddd
+            color: #000000
             margin: 0 15px 15px
             border-radius: 10px
             padding: 10px
             max-width: 470px
+
+            @media (prefers-color-scheme: light)
+                background-color: #333333
+                color: rgba(255, 255, 255, 0.87)
+
         .foodImage
             max-width: 450px
             max-height: 300px
             border-radius: 10px
             margin: 0 auto
+
         button
             margin: 0.3em
+            background-color: #333333
+            color: rgba(255, 255, 255, 0.87)
+            border: 1px solid #555555
+
+            @media (prefers-color-scheme: light)
+                background-color: #555555
+                color: #ffffff
+                border: 1px solid #888888
+
         .textbox
             display: flex
             flex-wrap: wrap
             flex-direction: column
+
             p
-                color: #000
-            h3 
+                color: #000000
+                @media (prefers-color-scheme: light)
+                    color: rgba(255, 255, 255, 0.87)
+
+            h3
                 font-size: 20px
-                color: #000 
+                color: #000000
+                @media (prefers-color-scheme: light)
+                    color: rgba(255, 255, 255, 0.87)
